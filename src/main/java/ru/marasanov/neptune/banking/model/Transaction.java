@@ -11,6 +11,7 @@ public class Transaction {
     private int id;
     private Card initiatorCard;
     private Card recipientCard;
+    private String status;
     private Timestamp timestamp;
 
     public Transaction(Transaction.Builder builder) {
@@ -18,12 +19,14 @@ public class Transaction {
         this.initiatorCard = builder.initiatorCard;
         this.recipientCard = builder.recipientCard;
         this.timestamp = builder.timestamp;
+        this.status = builder.status;
     }
 
     public static final class Builder {
         private int id;
         private Card initiatorCard;
         private Card recipientCard;
+        private String status;
         private Timestamp timestamp;
 
         private Builder() {}
@@ -45,6 +48,11 @@ public class Transaction {
 
         public Builder setTimestamp(Timestamp timestamp) {
             this.timestamp = timestamp;
+            return this;
+        }
+
+        public Builder setStatus(String status) {
+            this.status = status;
             return this;
         }
 
