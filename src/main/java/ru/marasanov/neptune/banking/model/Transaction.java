@@ -14,7 +14,11 @@ public class Transaction {
     private String status;
     private Timestamp timestamp;
 
-    public Transaction(Transaction.Builder builder) {
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public Transaction(Builder builder) {
         this.id = builder.id;
         this.initiatorCard = builder.initiatorCard;
         this.recipientCard = builder.recipientCard;

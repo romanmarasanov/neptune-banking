@@ -16,7 +16,7 @@ public class Account {
     private LocalDateTime createdAt;
     private List<Card> cards;
 
-    public Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 

@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Getter
 @Setter
 public class Card {
@@ -17,7 +14,11 @@ public class Card {
     private String status;
     private Account ownerAccount;
 
-    public Card(Card.Builder builder) {
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public Card(Builder builder) {
         this.id = builder.id;
         this.number = builder.number;
         this.pin = builder.pin;
