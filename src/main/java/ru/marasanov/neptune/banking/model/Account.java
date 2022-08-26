@@ -1,19 +1,17 @@
 package ru.marasanov.neptune.banking.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class Account {
     private int id;
     private String fullName;
     private String phoneNumber;
     private String role;
-    private LocalDateTime createdAt;
+    private Timestamp createdAt;
     private List<Card> cards;
 
     public static Builder builder() {
@@ -34,7 +32,7 @@ public class Account {
         private String fullName;
         private String phoneNumber;
         private String role;
-        private LocalDateTime createdAt;
+        private Timestamp createdAt;
         private List<Card> cards;
 
         private Builder() {}
@@ -59,7 +57,7 @@ public class Account {
             return this;
         }
 
-        public Builder setCreatedAt(LocalDateTime createdAt) {
+        public Builder setCreatedAt(Timestamp createdAt) {
             this.createdAt = createdAt;
             return this;
         }

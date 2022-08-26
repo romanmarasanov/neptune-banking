@@ -1,12 +1,10 @@
 package ru.marasanov.neptune.banking.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.sql.Timestamp;
 
-@Getter
-@Setter
+@Data
 public class Transaction {
     private int id;
     private Card initiatorCard;
