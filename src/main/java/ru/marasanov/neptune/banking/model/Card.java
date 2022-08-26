@@ -2,6 +2,8 @@ package ru.marasanov.neptune.banking.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Card {
     private int id;
@@ -10,6 +12,7 @@ public class Card {
     private long amount;
     private String status;
     private Account ownerAccount;
+    private List<Transaction> transactions;
 
     public static Builder builder() {
         return new Builder();
@@ -22,6 +25,7 @@ public class Card {
         this.amount = builder.amount;
         this.status = builder.status;
         this.ownerAccount = builder.ownerAccount;
+        this.transactions = builder.transactions;
     }
 
     public static final class Builder {
@@ -31,6 +35,7 @@ public class Card {
         private long amount;
         private String status;
         private Account ownerAccount;
+        private List<Transaction> transactions;
 
         private Builder() {}
 
@@ -61,6 +66,12 @@ public class Card {
 
         public Builder setOwnerAccount(Account ownerAccount) {
             this.ownerAccount = ownerAccount;
+            return this;
+        }
+
+        public Builder setTra
+                (List<Transaction> transactions) {
+            this.transactions = transactions;
             return this;
         }
 
