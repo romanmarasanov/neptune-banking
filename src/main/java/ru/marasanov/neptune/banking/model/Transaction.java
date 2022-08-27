@@ -7,10 +7,15 @@ import java.sql.Timestamp;
 @Data
 public class Transaction {
     private int id;
+    private int amount;
     private Card initiatorCard;
     private Card recipientCard;
+    private Account initiatorAccount;
     private String status;
     private Timestamp timestamp;
+
+    public Transaction() {
+    }
 
     public static Builder builder() {
         return new Builder();
@@ -18,16 +23,20 @@ public class Transaction {
 
     public Transaction(Builder builder) {
         this.id = builder.id;
+        this.amount = builder.amount;
         this.initiatorCard = builder.initiatorCard;
         this.recipientCard = builder.recipientCard;
+        this.initiatorAccount = builder.initiatorAccount;
         this.timestamp = builder.timestamp;
         this.status = builder.status;
     }
 
     public static final class Builder {
         private int id;
+        private int amount;
         private Card initiatorCard;
         private Card recipientCard;
+        private Account initiatorAccount;
         private String status;
         private Timestamp timestamp;
 
@@ -38,6 +47,12 @@ public class Transaction {
             return this;
         }
 
+        public Builder setAmount(int amount) {
+            this.amount = amount;
+            return this;
+        }
+
+
         public Builder setInitiatorCard(Card initiatorCard) {
             this.initiatorCard = initiatorCard;
             return this;
@@ -45,6 +60,11 @@ public class Transaction {
 
         public Builder setRecipientCard(Card recipientCard) {
             this.recipientCard = recipientCard;
+            return this;
+        }
+
+        public Builder setInitiatorAccount(Account initiatorAccount) {
+            this.initiatorAccount = initiatorAccount;
             return this;
         }
 

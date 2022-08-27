@@ -14,6 +14,9 @@ public class Account {
     private Timestamp createdAt;
     private List<Card> cards;
 
+    public Account() {
+    }
+
     public static Builder builder() {
         return new Builder();
     }

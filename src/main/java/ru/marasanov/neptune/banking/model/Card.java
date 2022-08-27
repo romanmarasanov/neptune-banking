@@ -14,6 +14,9 @@ public class Card {
     private Account ownerAccount;
     private List<Transaction> transactions;
 
+    public Card() {
+    }
+
     public static Builder builder() {
         return new Builder();
     }
