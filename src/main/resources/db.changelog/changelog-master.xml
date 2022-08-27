@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <preConditions>
+        <dbms type="postgresql"/>
+    </preConditions>
+
+    <changeSet id="1" author="romanmarasanov">
+        <comment>create tables in db</comment>
+        <sqlFile path="db.changelog/V1__create_tables.sql" />
+        <rollback>
+            <sqlFile path="db.changelog/V1__rollback.sql" />
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2" author="romanmarasanov">
+        <comment>add ATM account and card</comment>
+        <sqlFile path="db.changelog/V2__create_ATM.sql" />
+        <rollback>
+            <sqlFile path="db.changelog/V2__rollback.sql" />
+        </rollback>
+    </changeSet>
+
+    <changeSet id="3" author="romanmarasanov">
+        <comment>create sequences to account, card and transaction ids</comment>
+        <sqlFile path="db.changelog/V3__create_sequences.sql" />
+        <rollback>
+            <sqlFile path="db.changelog/V3__rollback.sql" />
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
