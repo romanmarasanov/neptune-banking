@@ -2,14 +2,15 @@
 CREATE TABLE account (
     account_id int PRIMARY KEY,
     full_name varchar(100) not null,
-    phone_number varchar(20) not null,
-    role varchar(30) not null
+    phone_number varchar(20) UNIQUE not null,
+    role varchar(30) not null,
+    created_at timestamp not null
 );
 
 CREATE TABLE card (
     card_id int PRIMARY KEY,
     account_id int not null REFERENCES account(account_id) ON DELETE CASCADE,
-    card_number varchar(16),
+    card_number varchar(16) UNIQUE,
     pin varchar not null,
     amount int not null check ( amount >= 0 ),
     status varchar(30) not null
