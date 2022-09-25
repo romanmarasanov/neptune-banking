@@ -1,17 +1,37 @@
-package ru.marasanov.neptune.banking.model;
+package ru.marasanov.neptune.banking.model.entity;
 
 import lombok.Data;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Data
+@Entity
+@Table(name = "account")
 public class Account {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id")
     private int id;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "full_name")
     private String fullName;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "role")
     private String role;
+
+    @Column(name = "created_at")
     private Timestamp createdAt;
+
+    @OneToMany(mappedBy = "ownerAccount", fetch = FetchType.LAZY)
     private List<Card> cards;
 
     public Account() {

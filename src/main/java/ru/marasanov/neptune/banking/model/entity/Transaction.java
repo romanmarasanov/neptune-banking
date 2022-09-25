@@ -1,17 +1,38 @@
-package ru.marasanov.neptune.banking.model;
-
+package ru.marasanov.neptune.banking.model.entity;
 import lombok.Data;
 
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
+@Entity
+@Table(name = "transaction")
 public class Transaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "transaction_id")
     private int id;
+
+    @Column(name = "amount")
     private int amount;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "source_card_id", referencedColumnName = "card_id")
     private Card initiatorCard;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "destination_card_id", referencedColumnName = "card_id")
     private Card recipientCard;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "initiation_account_id", referencedColumnName = "account_id")
     private Account initiatorAccount;
+
+    @Column(name = "status")
     private String status;
+
+    @Column(name = "ts")
     private Timestamp timestamp;
 
     public Transaction() {
