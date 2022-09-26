@@ -1,6 +1,7 @@
 package ru.marasanov.neptune.banking.model.entity;
 
 import lombok.Data;
+import ru.marasanov.neptune.banking.model.enums.CardStatus;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,7 +25,7 @@ public class Card {
     private long amount;
 
     @Column(name = "status")
-    private String status;
+    private CardStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
@@ -58,7 +59,7 @@ public class Card {
         private String number;
         private String pin;
         private long amount;
-        private String status;
+        private CardStatus status;
         private Account ownerAccount;
         private List<Transaction> outputTransactions;
         private List<Transaction> inputTransactions;
@@ -85,7 +86,7 @@ public class Card {
             return this;
         }
 
-        public Builder setStatus(String status) {
+        public Builder setStatus(CardStatus status) {
             this.status = status;
             return this;
         }

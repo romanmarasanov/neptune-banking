@@ -1,5 +1,6 @@
 package ru.marasanov.neptune.banking.model.entity;
 import lombok.Data;
+import ru.marasanov.neptune.banking.model.enums.TransactionStatus;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -30,7 +31,7 @@ public class Transaction {
     private Account initiatorAccount;
 
     @Column(name = "status")
-    private String status;
+    private TransactionStatus status;
 
     @Column(name = "ts")
     private Timestamp timestamp;
@@ -58,7 +59,7 @@ public class Transaction {
         private Card initiatorCard;
         private Card recipientCard;
         private Account initiatorAccount;
-        private String status;
+        private TransactionStatus status;
         private Timestamp timestamp;
 
         private Builder() {}
@@ -94,7 +95,7 @@ public class Transaction {
             return this;
         }
 
-        public Builder setStatus(String status) {
+        public Builder setStatus(TransactionStatus status) {
             this.status = status;
             return this;
         }
