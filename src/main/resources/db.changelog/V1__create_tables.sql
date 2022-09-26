@@ -2,8 +2,10 @@
 CREATE TABLE account (
     account_id int PRIMARY KEY,
     password varchar(100) check ( length(password) > 5 ),
-    full_name varchar(100) not null,
+    first_name varchar(100) not null,
+    last_name varchar(100) not null,
     phone_number varchar(20) UNIQUE not null,
+    email varchar(50) UNIQUE not null,
     role varchar(30) not null,
     created_at timestamp
 );
