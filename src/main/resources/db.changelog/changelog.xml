@@ -19,7 +19,7 @@
     </changeSet>
 
     <changeSet id="2" author="romanmarasanov">
-        <comment>add ATM account and card</comment>
+        <comment>add ATM1 and ATM2 accounts and their cards</comment>
         <sqlFile path="db.changelog/V2__create_ATM.sql" />
         <rollback>
             <sqlFile path="db.changelog/V2__rollback.sql" />
@@ -31,6 +31,14 @@
         <sqlFile path="db.changelog/V3__create_sequences.sql" />
         <rollback>
             <sqlFile path="db.changelog/V3__rollback.sql" />
+        </rollback>
+    </changeSet>
+
+    <changeSet id="4" author="romanmarasanov">
+        <comment>create transactions between ATM1 and ATM2 (for testing)</comment>
+        <sqlFile path="db.changelog/V4__create_test_transactions.sql" />
+        <rollback>
+            <sqlFile path="db.changelog/V4__rollback.sql" />
         </rollback>
     </changeSet>
 </databaseChangeLog>
