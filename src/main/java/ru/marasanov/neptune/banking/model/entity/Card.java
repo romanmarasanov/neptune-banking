@@ -25,15 +25,16 @@ public class Card {
     private long amount;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private CardStatus status;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "account_id")
     private Account ownerAccount;
 
-    @OneToMany(mappedBy = "initiatorCard", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "initiatorCard")
     private List<Transaction> outputTransactions;
-    @OneToMany(mappedBy = "recipientCard", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipientCard")
     private List<Transaction> inputTransactions;
 
     public Card() {

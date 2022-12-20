@@ -18,19 +18,20 @@ public class Transaction {
     @Column(name = "amount")
     private int amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "source_card_id", referencedColumnName = "card_id")
     private Card initiatorCard;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "destination_card_id", referencedColumnName = "card_id")
     private Card recipientCard;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "initiation_account_id", referencedColumnName = "account_id")
     private Account initiatorAccount;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private TransactionStatus status;
 
     @Column(name = "ts")

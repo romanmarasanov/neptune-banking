@@ -33,12 +33,13 @@ public class Account {
     private String email;
 
     @Column(name = "role")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @OneToMany(mappedBy = "ownerAccount", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ownerAccount")
     private List<Card> cards;
 
     public Account() {
