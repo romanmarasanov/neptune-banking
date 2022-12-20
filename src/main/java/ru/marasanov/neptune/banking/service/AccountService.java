@@ -3,12 +3,10 @@ package ru.marasanov.neptune.banking.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.marasanov.neptune.banking.exception.UserNotFoundException;
-import ru.marasanov.neptune.banking.model.Account;
+import ru.marasanov.neptune.banking.model.entity.Account;
 import ru.marasanov.neptune.banking.repository.AccountRepository;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,10 +18,6 @@ public class AccountService {
     @Autowired
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
-    }
-
-    public List<Account> getAll() {
-        return accountRepository.findAll();
     }
 
     public Account getById(int id) {
@@ -42,19 +36,13 @@ public class AccountService {
         return accountOptional.get();
     }
 
-    public List<Account> getSearchByFullNameResults(String searchStr) {
-        return accountRepository.findByFullNameContainingIgnoreCase(searchStr);
+    public Account getByEmail(String email) {
+        Optional<Account> accountOptional = accountRepository.findByEmail(email);
+        if (accountOptional.isEmpty()) {
+            throw new UserNotFoundException("can not find account with specified email");
+        }
+        return accountOptional.get();
     }
 
-    public List<Account> getAllCreatedAfter(Timestamp ts) {
-        return accountRepository.findByCreatedAtGreaterThan(ts);
-    }
 
-    public void save(Account account) {
-        accountRepository.save(account);
-    }
-
-    public void delete(Account account) {
-        accountRepository.delete(account);
-    }
 }
