@@ -12,9 +12,9 @@ import java.util.List;
 
 public class ConverterDTO {
     public static AccountDTO toAccountDTO(Account account) {
-        List<CardDTO> cardDTOs = new ArrayList<>();
+        List<Integer> cardIds = new ArrayList<>();
         for (Card card : account.getCards()) {
-            cardDTOs.add(toCardDTO(card));
+            cardIds.add(card.getId());
         }
         return new AccountDTO(
                 account.getFirstName(),
@@ -22,17 +22,17 @@ public class ConverterDTO {
                 account.getEmail(),
                 account.getPhoneNumber(),
                 account.getRole(),
-                cardDTOs);
+                cardIds);
     }
 
     public static CardDTO toCardDTO(Card card) {
-        List<TransactionDTO> inputTransactionDTOs = new ArrayList<>();
-        List<TransactionDTO> outputTransactionDTOs = new ArrayList<>();
+        List<Integer> inputTransactionIds = new ArrayList<>();
+        List<Integer> outputTransactionIds = new ArrayList<>();
         for (Transaction transaction : card.getInputTransactions()) {
-            inputTransactionDTOs.add(toTransactionDTO(transaction));
+            inputTransactionIds.add(transaction.getId());
         }
         for (Transaction transaction : card.getOutputTransactions()) {
-            outputTransactionDTOs.add(toTransactionDTO(transaction));
+            outputTransactionIds.add(transaction.getId());
         }
 
         return new CardDTO(
@@ -40,7 +40,7 @@ public class ConverterDTO {
                 card.getAmount(),
                 card.getStatus(),
                 card.getOwnerAccount().getFirstName(),
-                inputTransactionDTOs, outputTransactionDTOs
+                inputTransactionIds, outputTransactionIds
         );
     }
 
