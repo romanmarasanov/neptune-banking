@@ -15,7 +15,7 @@ public class CardDTO {
     private long amount;
     private CardStatus status;
     private String ownerFirstName;
-    private List<TransactionDTO> outputTransactionDTOs;
-    private List<TransactionDTO> inputTransactionDTOs;
+    private List<Integer> outputTransactionIds;
+    private List<Integer> inputTransactionIds;
 
 }

@@ -17,5 +17,5 @@ public class AccountDTO {
     private String email;
     private String phoneNumber;
     private Role role;
-    private List<CardDTO> cardDTOs;
+    private List<Integer> cardsIds;
 }
