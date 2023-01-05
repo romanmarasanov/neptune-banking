@@ -2,11 +2,14 @@ package ru.marasanov.neptune.banking.model;
 
 import ru.marasanov.neptune.banking.model.dto.AccountDTO;
 import ru.marasanov.neptune.banking.model.dto.CardDTO;
+import ru.marasanov.neptune.banking.model.dto.RegistrationDTO;
 import ru.marasanov.neptune.banking.model.dto.TransactionDTO;
 import ru.marasanov.neptune.banking.model.entity.Account;
 import ru.marasanov.neptune.banking.model.entity.Card;
 import ru.marasanov.neptune.banking.model.entity.Transaction;
+import ru.marasanov.neptune.banking.model.enums.Role;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +56,17 @@ public class ConverterDTO {
                 transaction.getStatus(),
                 transaction.getTimestamp()
         );
+    }
+
+    public static Account toAccount(RegistrationDTO registrationDTO) {
+        return Account.builder()
+                .setFirstName(registrationDTO.getFirstName())
+                .setLastName(registrationDTO.getLastName())
+                .setPassword(registrationDTO.getPassword())
+                .setEmail(registrationDTO.getEmail())
+                .setPhoneNumber(registrationDTO.getPhoneNumber())
+                .setRole(Role.ROLE_CLIENT)
+                .setCreatedAt(new Timestamp(System.currentTimeMillis()))
+                .build();
     }
 }
