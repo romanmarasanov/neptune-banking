@@ -51,6 +51,7 @@ public class Account {
 
     public Account(Builder builder) {
         this.id = builder.id;
+        this.password = builder.password;
         this.firstName = builder.firstName;
         this.lastName = builder.lastName;
         this.phoneNumber = builder.phoneNumber;
@@ -62,6 +63,7 @@ public class Account {
 
     public static final class Builder {
         private int id;
+        private String password;
         private String firstName;
         private String lastName;
         private String email;
@@ -74,6 +76,11 @@ public class Account {
 
         public Builder setId(int id) {
             this.id = id;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
             return this;
         }
 
