@@ -1,6 +1,8 @@
 package ru.marasanov.neptune.banking.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.marasanov.neptune.banking.exception.NotValidFormDataException;
 import ru.marasanov.neptune.banking.model.ConverterDTO;
@@ -15,12 +17,14 @@ public class RegistrationService {
     private final EmailValidator emailValidator;
     private final PhoneNumberValidator phoneNumberValidator;
     private final AccountRepository accountRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public RegistrationService(EmailValidator emailValidator, PhoneNumberValidator phoneNumberValidator, AccountRepository accountRepository) {
+    public RegistrationService(EmailValidator emailValidator, PhoneNumberValidator phoneNumberValidator, AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
         this.emailValidator = emailValidator;
         this.phoneNumberValidator = phoneNumberValidator;
         this.accountRepository = accountRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void register(RegistrationDTO registrationDTO) throws NotValidFormDataException {
@@ -30,7 +34,19 @@ public class RegistrationService {
         if (!phoneNumberValidator.test(registrationDTO.getPhoneNumber())) {
             throw new NotValidFormDataException("phone number is not valid");
         }
-        Account newAccount = ConverterDTO.toAccount(registrationDTO);
+        if (accountRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
+            throw new NotValidFormDataException("the account with specified email already exists");
+        }
+
+        RegistrationDTO registrationDTOEncrypted = new RegistrationDTO(
+                registrationDTO.getFirstName(),
+                registrationDTO.getLastName(),
+                registrationDTO.getPhoneNumber(),
+                registrationDTO.getEmail(),
+                passwordEncoder.encode(registrationDTO.getPassword())
+        );
+
+        Account newAccount = ConverterDTO.toAccount(registrationDTOEncrypted);
         accountRepository.save(newAccount);
     }
 }
