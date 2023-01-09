@@ -17,6 +17,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    //TODO: change method to searchBy in mapping '/search' (now name of the method doesn't note what it really does)
     @GetMapping
     public AccountDTO getById(@RequestParam(required = false, name = "number") String phoneNumber,
                               @RequestParam(required = false) String email,

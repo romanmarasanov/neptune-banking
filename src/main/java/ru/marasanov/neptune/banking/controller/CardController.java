@@ -21,6 +21,7 @@ public class CardController {
         this.cardService = cardService;
     }
 
+    //TODO: change method to searchBy in mapping '/search' (now name of the method doesn't note what it really does)
     @GetMapping
     public CardDTO getCard(@RequestParam(required = false, name = "card_number") String cardNumber,
                            @RequestParam(required = false) Integer id) {

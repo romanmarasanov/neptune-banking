@@ -35,6 +35,7 @@ public class TransactionController {
         }
     }
 
+    //TODO: change method to searchBy in mapping '/search' (now name of the method doesn't note what it really does)
     @GetMapping("/card")
     public List<TransactionDTO> getByCardNumber(@RequestParam(name = "source_card_number", required = false) String sourceNumber,
                                                 @RequestParam(name = "destination_card_number", required = false) String destinationNumber) {
