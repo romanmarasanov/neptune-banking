@@ -6,6 +6,8 @@ import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.AccountDTO;
 import ru.marasanov.neptune.banking.service.AccountService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/account")
 public class AccountController {
@@ -17,20 +19,18 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    //TODO: change method to searchBy in mapping '/search' (now name of the method doesn't note what it really does)
     @GetMapping
-    public AccountDTO getById(@RequestParam(required = false, name = "number") String phoneNumber,
-                              @RequestParam(required = false) String email,
-                              @RequestParam(required = false) Integer id) {
-        if (phoneNumber != null) {
-            return ConverterDTO.toAccountDTO(accountService.getByPhoneNumber(phoneNumber));
-        } else if (email != null) {
-            return ConverterDTO.toAccountDTO(accountService.getByEmail(email));
-        } else if (id != null) {
-            return ConverterDTO.toAccountDTO(accountService.getById(id));
-        } else {
-            //TODO: process no args case
-            return null;
+    public AccountDTO getAccount(@RequestParam(name = "find_by") String findBy,
+                                       @RequestParam String value) {
+        switch (findBy) {
+            case "id":
+                return ConverterDTO.toAccountDTO(accountService.getById(Integer.parseInt(value)));
+            case "email":
+                return ConverterDTO.toAccountDTO(accountService.getByEmail(value));
+            case "phone_number":
+                return ConverterDTO.toAccountDTO(accountService.getByPhoneNumber(value));
+            default: return null; //TODO: process no args case
         }
     }
+
 }
