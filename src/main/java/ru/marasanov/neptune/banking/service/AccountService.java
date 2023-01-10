@@ -7,6 +7,7 @@ import ru.marasanov.neptune.banking.model.entity.Account;
 import ru.marasanov.neptune.banking.repository.AccountRepository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,4 +46,7 @@ public class AccountService {
     }
 
 
+    public List<Account> getAll() {
+        return accountRepository.findAll();
+    }
 }

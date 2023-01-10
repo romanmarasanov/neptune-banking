@@ -7,6 +7,7 @@ import ru.marasanov.neptune.banking.model.dto.AccountDTO;
 import ru.marasanov.neptune.banking.service.AccountService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/account")
@@ -31,6 +32,13 @@ public class AccountController {
                 return ConverterDTO.toAccountDTO(accountService.getByPhoneNumber(value));
             default: return null; //TODO: process no args case
         }
+    }
+
+    @GetMapping
+    public List<AccountDTO> getAllAccounts() {
+        return accountService.getAll().stream()
+                .map(ConverterDTO::toAccountDTO)
+                .collect(Collectors.toList());
     }
 
 }
