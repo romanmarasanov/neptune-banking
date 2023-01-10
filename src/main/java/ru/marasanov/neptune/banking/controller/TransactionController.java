@@ -25,16 +25,6 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping
-    public TransactionDTO getById(@RequestParam Integer id) {
-        try {
-            return ConverterDTO.toTransactionDTO(transactionService.getById(id));
-        } catch (TransactionNotFoundException e) {
-            e.printStackTrace();
-            return null; //TODO: fix
-        }
-    }
-
     //TODO: change method to searchBy in mapping '/search' (now name of the method doesn't note what it really does)
     @GetMapping("/card")
     public List<TransactionDTO> getByCardNumber(@RequestParam(name = "source_card_number", required = false) String sourceNumber,
