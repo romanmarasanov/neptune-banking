@@ -22,7 +22,7 @@ public class AccountController {
 
     @GetMapping
     public AccountDTO getAccount(@RequestParam(name = "find_by") String findBy,
-                                       @RequestParam String value) {
+                                 @RequestParam String value) {
         switch (findBy) {
             case "id":
                 return ConverterDTO.toAccountDTO(accountService.getById(Integer.parseInt(value)));
@@ -30,7 +30,8 @@ public class AccountController {
                 return ConverterDTO.toAccountDTO(accountService.getByEmail(value));
             case "phone_number":
                 return ConverterDTO.toAccountDTO(accountService.getByPhoneNumber(value));
-            default: return null; //TODO: process no args case
+            default:
+                return null; //TODO: process no args case
         }
     }
 
