@@ -2,7 +2,7 @@ package ru.marasanov.neptune.banking.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.marasanov.neptune.banking.exception.UserNotFoundException;
+import ru.marasanov.neptune.banking.exception.AccountNotFoundException;
 import ru.marasanov.neptune.banking.model.entity.Account;
 import ru.marasanov.neptune.banking.repository.AccountRepository;
 
@@ -24,7 +24,7 @@ public class AccountService {
     public Account getById(int id) {
         Optional<Account> accountOptional = accountRepository.findById(id);
         if (accountOptional.isEmpty()) {
-            throw new UserNotFoundException("can not find account with specified id");
+            throw new AccountNotFoundException("can not find account with specified id");
         }
         return accountOptional.get();
     }
@@ -32,7 +32,7 @@ public class AccountService {
     public Account getByPhoneNumber(String number) {
         Optional<Account> accountOptional = accountRepository.findByPhoneNumber(number);
         if (accountOptional.isEmpty()) {
-            throw new UserNotFoundException("can not find account with specified phone number");
+            throw new AccountNotFoundException("can not find account with specified phone number");
         }
         return accountOptional.get();
     }
@@ -40,7 +40,7 @@ public class AccountService {
     public Account getByEmail(String email) {
         Optional<Account> accountOptional = accountRepository.findByEmail(email);
         if (accountOptional.isEmpty()) {
-            throw new UserNotFoundException("can not find account with specified email");
+            throw new AccountNotFoundException("can not find account with specified email");
         }
         return accountOptional.get();
     }
