@@ -33,6 +33,6 @@ public class TransactionService {
     }
 
     public List<Transaction> getAllByCardId(int cardId) {
-        return transactionRepository.findByRecipientCardIdOrInitiatorCardId(cardId);
+        return transactionRepository.findByRecipientCardIdOrInitiatorCardId(cardId, cardId);
     }
 }

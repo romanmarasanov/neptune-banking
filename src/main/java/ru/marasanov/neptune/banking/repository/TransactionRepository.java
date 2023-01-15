@@ -11,5 +11,5 @@ import java.util.List;
 public interface TransactionRepository
         extends JpaRepository<Transaction, Integer>, CustomTransactionRepository {
 
-    List<Transaction> findByRecipientCardIdOrInitiatorCardId(int cardId);
+    List<Transaction> findByRecipientCardIdOrInitiatorCardId(int RecipientCardId, int InitiatorCardId);
 }
