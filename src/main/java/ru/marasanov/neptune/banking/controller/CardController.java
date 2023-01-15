@@ -2,13 +2,9 @@ package ru.marasanov.neptune.banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.marasanov.neptune.banking.exception.CardBlockedException;
-import ru.marasanov.neptune.banking.exception.CardNotFoundException;
 import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.CardDTO;
-import ru.marasanov.neptune.banking.model.dto.TransactionDTO;
 import ru.marasanov.neptune.banking.model.entity.Card;
-import ru.marasanov.neptune.banking.model.entity.Transaction;
 import ru.marasanov.neptune.banking.service.CardService;
 
 import java.util.ArrayList;
