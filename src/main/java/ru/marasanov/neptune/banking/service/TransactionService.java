@@ -31,4 +31,8 @@ public class TransactionService {
     public List<Transaction> getBySourceCardNumber(String number) {
         return transactionRepository.findBySourceCardNumber(number);
     }
+
+    public List<Transaction> getAllByCardId(int cardId) {
+        return transactionRepository.findByRecipientCardIdOrInitiatorCardId(cardId);
+    }
 }
