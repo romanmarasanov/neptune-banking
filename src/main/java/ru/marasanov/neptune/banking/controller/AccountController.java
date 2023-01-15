@@ -35,11 +35,4 @@ public class AccountController {
         }
     }
 
-    @GetMapping
-    public List<AccountDTO> getAllAccounts() {
-        return accountService.getAll().stream()
-                .map(ConverterDTO::toAccountDTO)
-                .collect(Collectors.toList());
-    }
-
 }
