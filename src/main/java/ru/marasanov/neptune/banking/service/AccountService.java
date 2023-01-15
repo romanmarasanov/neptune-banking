@@ -21,7 +21,7 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    public Account getById(int id) {
+    public Account getById(int id) throws AccountNotFoundException {
         Optional<Account> accountOptional = accountRepository.findById(id);
         if (accountOptional.isEmpty()) {
             throw new AccountNotFoundException("can not find account with specified id");
@@ -29,7 +29,7 @@ public class AccountService {
         return accountOptional.get();
     }
 
-    public Account getByPhoneNumber(String number) {
+    public Account getByPhoneNumber(String number) throws AccountNotFoundException {
         Optional<Account> accountOptional = accountRepository.findByPhoneNumber(number);
         if (accountOptional.isEmpty()) {
             throw new AccountNotFoundException("can not find account with specified phone number");
@@ -37,7 +37,7 @@ public class AccountService {
         return accountOptional.get();
     }
 
-    public Account getByEmail(String email) {
+    public Account getByEmail(String email) throws AccountNotFoundException {
         Optional<Account> accountOptional = accountRepository.findByEmail(email);
         if (accountOptional.isEmpty()) {
             throw new AccountNotFoundException("can not find account with specified email");

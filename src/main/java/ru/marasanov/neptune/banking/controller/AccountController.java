@@ -6,9 +6,6 @@ import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.AccountDTO;
 import ru.marasanov.neptune.banking.service.AccountService;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/api/v1/account")
 public class AccountController {
