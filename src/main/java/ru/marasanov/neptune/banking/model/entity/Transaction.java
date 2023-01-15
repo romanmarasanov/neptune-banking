@@ -30,6 +30,10 @@ public class Transaction {
     @JoinColumn(name = "initiation_account_id", referencedColumnName = "account_id")
     private Account initiatorAccount;
 
+    @ManyToOne
+    @JoinColumn(name = "receiver_account_id", referencedColumnName = "account_id")
+    private Account receiverAccount;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private TransactionStatus status;
@@ -50,6 +54,7 @@ public class Transaction {
         this.initiatorCard = builder.initiatorCard;
         this.recipientCard = builder.recipientCard;
         this.initiatorAccount = builder.initiatorAccount;
+        this.receiverAccount = builder.receiverAccount;
         this.timestamp = builder.timestamp;
         this.status = builder.status;
     }
@@ -60,6 +65,7 @@ public class Transaction {
         private Card initiatorCard;
         private Card recipientCard;
         private Account initiatorAccount;
+        private Account receiverAccount;
         private TransactionStatus status;
         private Timestamp timestamp;
 
@@ -89,6 +95,10 @@ public class Transaction {
         public Builder setInitiatorAccount(Account initiatorAccount) {
             this.initiatorAccount = initiatorAccount;
             return this;
+        }
+
+        public void setReceiverAccount(Account receiverAccount) {
+            this.receiverAccount = receiverAccount;
         }
 
         public Builder setTimestamp(Timestamp timestamp) {

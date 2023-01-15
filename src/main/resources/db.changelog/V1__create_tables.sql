@@ -24,6 +24,7 @@ CREATE TABLE transaction (
     source_card_id int not null REFERENCES card(card_id) ON DELETE SET NULL,
     destination_card_id int not null REFERENCES card(card_id) ON DELETE SET NULL,
     initiation_account_id int not null REFERENCES account(account_id) ON DELETE SET NULL,
+    receiver_account_id int REFERENCES account(account_id) ON DELETE SET NULL DEFAULT NULL,
     amount int not null check (amount>=0),
     ts timestamp not null,
     status varchar(30) not null,

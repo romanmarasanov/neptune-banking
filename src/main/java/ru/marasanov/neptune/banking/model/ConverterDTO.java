@@ -53,6 +53,7 @@ public class ConverterDTO {
                 transaction.getInitiatorCard().getNumber(),
                 transaction.getRecipientCard().getNumber(),
                 transaction.getInitiatorAccount().getFirstName(),
+                transaction.getReceiverAccount().getFirstName(),
                 transaction.getStatus(),
                 transaction.getTimestamp()
         );

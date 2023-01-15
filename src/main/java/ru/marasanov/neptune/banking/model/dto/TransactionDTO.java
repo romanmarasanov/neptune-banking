@@ -3,7 +3,6 @@ package ru.marasanov.neptune.banking.model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import ru.marasanov.neptune.banking.model.entity.Transaction;
 import ru.marasanov.neptune.banking.model.enums.TransactionStatus;
 
 import java.sql.Timestamp;
@@ -16,6 +15,7 @@ public class TransactionDTO {
     private String initiatorCardNumber;
     private String recipientCardNumber;
     private String initiatorFirstName;
+    private String receiverFirstName;
     private TransactionStatus status;
     private Timestamp timestamp;
 }
