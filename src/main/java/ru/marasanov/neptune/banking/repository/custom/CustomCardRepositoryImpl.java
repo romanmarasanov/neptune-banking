@@ -18,25 +18,37 @@ public class CustomCardRepositoryImpl implements CustomCardRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * this one and the next method gets one particular card from DB
+     * with fetched output and input transactions. First we get card
+     * and join transaction table to get input transactions, then we
+     * use fetchOutputTransactionsToCard method to add output transactions
+     * Thus, we create two transactions, but don't create more than one
+     * join in the query
+     * <p>
+     * possible improvement: using batch-query to make two queries
+     * by one transaction
+     *
+     * @param number – number of card to find
+     * @return founded card or empty optional
+     */
     @Override
     public Optional<Card> findCustomByNumber(String number) {
         Card card = entityManager.createQuery(
                         "select distinct c " +
-                        "from Card c " +
-                        "left join fetch c.inputTransactions " +
-                        "where c.number=:number ", Card.class)
+                                "from Card c " +
+                                "left join fetch c.inputTransactions " +
+                                "where c.number=:number ", Card.class)
                 .setParameter("number", number)
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .getSingleResult();
-
-        card = fetchOutputTransactionsToCard(card);
-
-        return Optional.ofNullable(card);
+        return Optional.ofNullable(fetchOutputTransactionsToCard(card));
     }
 
     @Override
     public Optional<Card> findCustomById(Integer id) {
-        Card card = entityManager.createQuery(
+        Card card = entityManager
+                .createQuery(
                         "select distinct c " +
                                 "from Card c " +
                                 "left join fetch c.inputTransactions " +
@@ -44,38 +56,61 @@ public class CustomCardRepositoryImpl implements CustomCardRepository {
                 .setParameter("id", id)
                 .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .getSingleResult();
-
-        card = fetchOutputTransactionsToCard(card);
-
-        return Optional.ofNullable(card);
+        return Optional.ofNullable(fetchOutputTransactionsToCard(card));
     }
 
+    /**
+     * the next three methods get the list card from DB
+     * with fetched output and input transactions. First we get cards
+     * and join transaction table to get input transactions, then we
+     * use fetchOutputTransactionsToCard method to add output transactions
+     * Thus, we create two transactions, but don't create more than one
+     * join in the query
+     *
+     * possible improvement: using batch-query to make two queries
+     * by one transaction or use jdbc or jOOQ
+     *
+     * @param email – owner account's email
+     * @return a list of founded cards (maybe empty)
+     */
     @Override
     public List<Card> findByOwnerEmail(String email) {
         List<Card> cards = entityManager
-                .createQuery("select a " +
-                        "from Account a " +
-                        "left join fetch a.cards c " +
-                        "where a.email = :email", Account.class)
+                .createQuery(
+                        "select distinct c " +
+                                "from Card c " +
+                                "left join fetch c.inputTransactions " +
+                                "where c.ownerAccount.email = :email", Card.class)
                 .setParameter("email", email)
-                .getSingleResult()
-                .getCards();
-
-        return fetchTransactionsToList(cards);
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+        return fetchOutputTransactionsToCards(cards);
     }
 
     @Override
     public List<Card> findByOwnerPhoneNumber(String number) {
         List<Card> cards = entityManager
-                .createQuery("select a " +
-                        "from Account a " +
-                        "left join fetch a.cards c " +
-                        "where a.phoneNumber = :number", Account.class)
+                .createQuery("select c " +
+                        "from Card c " +
+                        "left join fetch c.inputTransactions " +
+                        "where c.ownerAccount.phoneNumber = :number", Account.class)
                 .setParameter("number", number)
                 .getSingleResult()
                 .getCards();
+        return fetchOutputTransactionsToCards(cards);
+    }
 
-        return fetchTransactionsToList(cards);
+    @Override
+    public List<Card> findByOwnerId(int id) {
+        List<Card> cards = entityManager
+                .createQuery("select distinct c " +
+                        "from Card c " +
+                        "left join fetch c.inputTransactions " +
+                        "where c.ownerAccount.id = :id", Card.class)
+                .setParameter("id", id)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
+                .getResultList();
+        return fetchOutputTransactionsToCards(cards);
     }
 
     private Card fetchOutputTransactionsToCard(Card card) {
@@ -88,21 +123,14 @@ public class CustomCardRepositoryImpl implements CustomCardRepository {
                 .getSingleResult();
     }
 
-    private List<Card> fetchTransactionsToList(List<Card> cards) {
-        cards = entityManager
-                .createQuery("select c " +
-                        "from Card c " +
-                        "left join fetch c.inputTransactions " +
-                        "where c in :cards", Card.class)
-                .setParameter("cards", cards)
-                .getResultList();
-        cards = entityManager
-                .createQuery("select c " +
+    private List<Card> fetchOutputTransactionsToCards(List<Card> cards) {
+        return entityManager
+                .createQuery("select distinct c " +
                         "from Card c " +
                         "left join fetch c.outputTransactions " +
                         "where c in :cards", Card.class)
                 .setParameter("cards", cards)
+                .setHint(QueryHints.HINT_PASS_DISTINCT_THROUGH, false)
                 .getResultList();
-        return cards;
     }
 }

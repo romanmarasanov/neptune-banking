@@ -2,7 +2,7 @@ package ru.marasanov.neptune.banking.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.marasanov.neptune.banking.repository.custom.CustomCardRepository;
+import ru.marasanov.neptune.banking.repository.AccountRepository;
 import ru.marasanov.neptune.banking.exception.CardBlockedException;
 import ru.marasanov.neptune.banking.exception.CardNotFoundException;
 import ru.marasanov.neptune.banking.exception.NotEnoughAmountException;
@@ -82,5 +82,9 @@ public class CardService {
 
     public List<Card> getByOwnerPhoneNumber(String phoneNumber) {
         return cardRepository.findByOwnerPhoneNumber(phoneNumber);
+    }
+
+    public List<Card> getByOwnerId(int ownerId) {
+        return cardRepository.findByOwnerId(ownerId);
     }
 }

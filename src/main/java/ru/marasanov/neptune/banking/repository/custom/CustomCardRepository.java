@@ -10,4 +10,5 @@ public interface CustomCardRepository {
     Optional<Card> findCustomById(Integer id);
     List<Card> findByOwnerEmail(String email);
     List<Card> findByOwnerPhoneNumber(String number);
+    List<Card> findByOwnerId(int ownerId);
 }

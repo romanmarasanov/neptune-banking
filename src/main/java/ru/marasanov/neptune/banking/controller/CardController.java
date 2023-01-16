@@ -7,7 +7,6 @@ import ru.marasanov.neptune.banking.model.dto.CardDTO;
 import ru.marasanov.neptune.banking.model.entity.Card;
 import ru.marasanov.neptune.banking.service.CardService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,7 @@ public class CardController {
         }
     }
 
-    @GetMapping("/one")
+    @GetMapping("/by_account")
     public List<CardDTO> getCards(@RequestParam(name = "find_by") String findBy,
                            @RequestParam String value) {
         List<Card> cards;
@@ -50,6 +49,9 @@ public class CardController {
                     break;
                 case "phone_number":
                     cards = cardService.getByOwnerPhoneNumber(value);
+                    break;
+                case "account_id":
+                    cards = cardService.getByOwnerId(Integer.parseInt(value));
                     break;
                 default:
                     return null; //TODO: process no args case
