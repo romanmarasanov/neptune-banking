@@ -13,23 +13,23 @@ public class CustomTransactionRepositoryImpl implements CustomTransactionReposit
     private EntityManager entityManager;
 
     @Override
-    public List<Transaction> findBySourceCardNumber(String number) {
+    public List<Transaction> findBySourceCardId(int id) {
         return entityManager.createQuery("select c " +
                 "from Card c " +
                 "left join fetch c.outputTransactions " +
-                "where c.number = :number", Card.class)
-                .setParameter("number", number)
+                "where c.id = :id", Card.class)
+                .setParameter("id", id)
                 .getSingleResult()
                 .getOutputTransactions();
     }
 
     @Override
-    public List<Transaction> findByDestinationCardNumber(String number) {
+    public List<Transaction> findByDestinationCardId(int id) {
         return entityManager.createQuery("select c " +
                 "from Card c " +
                 "left join fetch c.inputTransactions " +
-                "where c.number = :number", Card.class)
-                .setParameter("number", number)
+                "where c.id = :id", Card.class)
+                .setParameter("id", id)
                 .getSingleResult()
                 .getInputTransactions();
     }

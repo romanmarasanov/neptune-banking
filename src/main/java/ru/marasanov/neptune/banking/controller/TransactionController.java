@@ -10,7 +10,6 @@ import ru.marasanov.neptune.banking.model.dto.TransactionDTO;
 import ru.marasanov.neptune.banking.model.entity.Transaction;
 import ru.marasanov.neptune.banking.service.TransactionService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,13 +29,13 @@ public class TransactionController {
                                                 @RequestParam String value) {
         List<Transaction> transactions;
         switch (findBy) {
-            case "source_card_number":
-                transactions = transactionService.getBySourceCardNumber(value);
+            case "source_card_id":
+                transactions = transactionService.getByInitiatorCardId(Integer.parseInt(value));
                 break;
-            case "destination_card_number":
-                transactions = transactionService.getByDestinationCardNumber(value);
+            case "destination_card_id":
+                transactions = transactionService.getByRecipientCardId(Integer.parseInt(value));
                 break;
-            case "corresponding_card_number":
+            case "corresponding_card_id":
                 transactions = transactionService.getAllByCardId(Integer.parseInt(value));
                 break;
             default:

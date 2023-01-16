@@ -5,6 +5,6 @@ import ru.marasanov.neptune.banking.model.entity.Transaction;
 import java.util.List;
 
 public interface CustomTransactionRepository {
-    List<Transaction> findBySourceCardNumber(String number);
-    List<Transaction> findByDestinationCardNumber(String number);
+    List<Transaction> findBySourceCardId(int id);
+    List<Transaction> findByDestinationCardId(int id);
 }

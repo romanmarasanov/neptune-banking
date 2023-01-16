@@ -24,12 +24,12 @@ public class TransactionService {
                 .orElseThrow(() -> new TransactionNotFoundException("can not find transaction with specified id"));
     }
 
-    public List<Transaction> getByDestinationCardNumber(String number) {
-        return transactionRepository.findByDestinationCardNumber(number);
+    public List<Transaction> getByRecipientCardId(int cardId) {
+        return transactionRepository.findByDestinationCardId(cardId);
     }
 
-    public List<Transaction> getBySourceCardNumber(String number) {
-        return transactionRepository.findBySourceCardNumber(number);
+    public List<Transaction> getByInitiatorCardId(int cardId) {
+        return transactionRepository.findBySourceCardId(cardId);
     }
 
     public List<Transaction> getAllByCardId(int cardId) {
