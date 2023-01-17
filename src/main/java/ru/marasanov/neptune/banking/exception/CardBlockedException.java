@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.exception;
 
-public class CardBlockedException extends Exception {
-    public CardBlockedException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class CardBlockedException extends AbstractApiException {
+    public CardBlockedException(HttpStatus status, String message) {
+        super(status, message);
     }
 }

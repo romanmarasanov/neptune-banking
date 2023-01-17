@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.exception;
 
-public class NotEnoughAmountException extends Exception {
-    public NotEnoughAmountException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class NotEnoughAmountException extends AbstractApiException {
+    public NotEnoughAmountException(HttpStatus status, String message) {
+        super(status, message);
     }
 }

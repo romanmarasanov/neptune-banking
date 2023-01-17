@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.exception;
 
-public class CardNotFoundException extends Exception {
-    public CardNotFoundException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class CardNotFoundException extends AbstractApiException {
+    public CardNotFoundException(HttpStatus status, String message) {
+        super(status, message);
     }
 }

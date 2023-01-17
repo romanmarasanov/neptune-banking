@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.exception;
 
-public class TransactionNotFoundException extends Exception {
-    public TransactionNotFoundException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class TransactionNotFoundException extends AbstractApiException {
+    public TransactionNotFoundException(HttpStatus status, String message) {
+        super(status, message);
     }
 }

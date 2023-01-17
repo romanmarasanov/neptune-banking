@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.exception;
 
-public class NotValidFormDataException extends Exception {
-    public NotValidFormDataException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class NotValidFormDataException extends AbstractApiException {
+    public NotValidFormDataException(HttpStatus status, String message) {
+        super(status, message);
     }
 }
