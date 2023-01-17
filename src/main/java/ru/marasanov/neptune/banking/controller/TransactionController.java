@@ -1,10 +1,7 @@
 package ru.marasanov.neptune.banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.TransactionDTO;
 import ru.marasanov.neptune.banking.model.entity.Transaction;
@@ -22,6 +19,11 @@ public class TransactionController {
     @Autowired
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
+    }
+
+    @GetMapping("/{id}")
+    public TransactionDTO getById(@PathVariable int id) {
+        return ConverterDTO.toTransactionDTO(transactionService.getById(id));
     }
 
     @GetMapping
