@@ -1,6 +1,7 @@
 package ru.marasanov.neptune.banking.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.marasanov.neptune.banking.exception.NotValidFormDataException;
@@ -28,13 +29,14 @@ public class RegistrationService {
 
     public void register(RegistrationDTO registrationDTO) throws NotValidFormDataException {
         if (!emailValidator.test(registrationDTO.getEmail())) {
-            throw new NotValidFormDataException("email is not valid");
+            throw new NotValidFormDataException(HttpStatus.BAD_REQUEST, "email is not valid");
         }
         if (!phoneNumberValidator.test(registrationDTO.getPhoneNumber())) {
-            throw new NotValidFormDataException("phone number is not valid");
+            throw new NotValidFormDataException(HttpStatus.BAD_REQUEST, "phone number is not valid");
         }
         if (accountRepository.findByEmail(registrationDTO.getEmail()).isPresent()) {
-            throw new NotValidFormDataException("the account with specified email already exists");
+            throw new NotValidFormDataException(HttpStatus.BAD_REQUEST,
+                    "the account with specified email already exists");
         }
 
         RegistrationDTO registrationDTOEncrypted = new RegistrationDTO(

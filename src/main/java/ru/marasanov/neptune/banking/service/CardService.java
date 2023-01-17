@@ -1,6 +1,7 @@
 package ru.marasanov.neptune.banking.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.marasanov.neptune.banking.exception.CardBlockedException;
 import ru.marasanov.neptune.banking.exception.CardNotFoundException;
@@ -31,15 +32,27 @@ public class CardService {
     public Card getByNumber(String number) throws CardNotFoundException {
         return cardRepository
                 .findCustomByNumber(number)
-                .orElseThrow(() -> new CardNotFoundException("can not find card with specified id"));
+                .orElseThrow(() -> new CardNotFoundException(
+                        HttpStatus.NOT_FOUND,
+                        "can not find card with specified id")
+                );
     }
 
     public Card getById(Integer id) throws CardNotFoundException {
         return cardRepository
                 .findCustomById(id)
-                .orElseThrow(() -> new CardNotFoundException("can not find card with specified id"));
+                .orElseThrow(() -> new CardNotFoundException(
+                        HttpStatus.NOT_FOUND,
+                        "can not find card with specified id")
+                );
     }
 
+
+    /**
+     * gets two cards and amount and do transfer. This method does not check
+     * if cards exist in DB, so initiatorCard and recipientCard should be
+     * received from DB beforehand with cardService
+     */
     public void transfer(Card initiatorCard, Card recipientCard, int amount)
             throws CardBlockedException, NotEnoughAmountException {
         Transaction transaction = Transaction.builder()
@@ -55,17 +68,20 @@ public class CardService {
         if (initiatorCard.getStatus().equals(CardStatus.BLOCKED)) {
             transaction.setStatus(TransactionStatus.CANCELED);
             transactionRepository.save(transaction);
-            throw new CardBlockedException("can not transfer: source card is blocked");
+            throw new CardBlockedException(HttpStatus.BAD_REQUEST,
+                    "can not transfer: source card is blocked");
         }
         if (recipientCard.getStatus().equals(CardStatus.BLOCKED)) {
             transaction.setStatus(TransactionStatus.CANCELED);
             transactionRepository.save(transaction);
-            throw new CardBlockedException("can not transfer: destination card is blocked");
+            throw new CardBlockedException(HttpStatus.BAD_REQUEST,
+                    "can not transfer: destination card is blocked");
         }
         if (initiatorCard.getAmount() < amount) {
             transaction.setStatus(TransactionStatus.CANCELED);
             transactionRepository.save(transaction);
-            throw new NotEnoughAmountException("can not transfer: source card has not enough amount");
+            throw new NotEnoughAmountException(HttpStatus.BAD_REQUEST,
+                    "can not transfer: source card has not enough amount");
         }
 
         initiatorCard.setAmount(initiatorCard.getAmount() - amount);

@@ -1,6 +1,7 @@
 package ru.marasanov.neptune.banking.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.marasanov.neptune.banking.exception.TransactionNotFoundException;
 import ru.marasanov.neptune.banking.model.entity.Transaction;
@@ -21,7 +22,10 @@ public class TransactionService {
     public Transaction getById(Integer id) throws TransactionNotFoundException {
         return transactionRepository
                 .findById(id)
-                .orElseThrow(() -> new TransactionNotFoundException("can not find transaction with specified id"));
+                .orElseThrow(() -> new TransactionNotFoundException(
+                        HttpStatus.NOT_FOUND,
+                        "can not find transaction with specified id")
+                );
     }
 
     public List<Transaction> getByRecipientCardId(int cardId) {
