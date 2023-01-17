@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.marasanov.neptune.banking.exception.NotValidJSONValueException;
 import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.TransactionDTO;
 import ru.marasanov.neptune.banking.model.entity.Transaction;
@@ -41,7 +43,8 @@ public class TransactionController {
                 transactions = transactionService.getAllByCardId(Integer.parseInt(value));
                 break;
             default:
-                return null; //TODO: process no args case
+                throw new NotValidJSONValueException(HttpStatus.BAD_REQUEST,
+                        "request param 'find_by' is not valid");
         }
         return transactions.stream().map(ConverterDTO::toTransactionDTO).collect(Collectors.toList());
     }

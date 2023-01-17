@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.marasanov.neptune.banking.exception.NotValidJSONValueException;
 import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.CardDTO;
 import ru.marasanov.neptune.banking.model.entity.Card;
@@ -23,18 +25,14 @@ public class CardController {
     @GetMapping
     public CardDTO getCard(@RequestParam(name = "find_by") String findBy,
                            @RequestParam String value) {
-        try {
-            switch (findBy) {
-                case "number":
-                    return ConverterDTO.toCardDTO(cardService.getByNumber(value));
-                case "id":
-                    return ConverterDTO.toCardDTO(cardService.getById(Integer.parseInt(value)));
-                default:
-                    return null; //TODO: process no args case
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        switch (findBy) {
+            case "number":
+                return ConverterDTO.toCardDTO(cardService.getByNumber(value));
+            case "id":
+                return ConverterDTO.toCardDTO(cardService.getById(Integer.parseInt(value)));
+            default:
+                throw new NotValidJSONValueException(HttpStatus.BAD_REQUEST,
+                        "request param 'find_by' is not valid");
         }
     }
 
@@ -42,23 +40,19 @@ public class CardController {
     public List<CardDTO> getCards(@RequestParam(name = "find_by") String findBy,
                            @RequestParam String value) {
         List<Card> cards;
-        try {
-            switch (findBy) {
-                case "email":
-                    cards = cardService.getByOwnerEmail(value);
-                    break;
-                case "phone_number":
-                    cards = cardService.getByOwnerPhoneNumber(value);
-                    break;
-                case "account_id":
-                    cards = cardService.getByOwnerId(Integer.parseInt(value));
-                    break;
-                default:
-                    return null; //TODO: process no args case
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+        switch (findBy) {
+            case "email":
+                cards = cardService.getByOwnerEmail(value);
+                break;
+            case "phone_number":
+                cards = cardService.getByOwnerPhoneNumber(value);
+                break;
+            case "account_id":
+                cards = cardService.getByOwnerId(Integer.parseInt(value));
+                break;
+            default:
+                throw new NotValidJSONValueException(HttpStatus.BAD_REQUEST,
+                        "request param 'find_by' is not valid");
         }
         return cards.stream().map(ConverterDTO::toCardDTO).collect(Collectors.toList());
     }

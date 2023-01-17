@@ -22,12 +22,7 @@ public class RegistrationController {
 
     @PostMapping
     public RegistrationDTO register(@RequestBody RegistrationDTO registrationDTO) {
-        try {
-            registrationService.register(registrationDTO);
-        } catch (NotValidFormDataException e) {
-            e.printStackTrace();
-        }
+        registrationService.register(registrationDTO);
         return registrationDTO;
-        //TODO: change returned value type to status code (OK if registration successful, 400 if smth wrong)
     }
 }

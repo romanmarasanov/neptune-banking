@@ -1,7 +1,9 @@
 package ru.marasanov.neptune.banking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.marasanov.neptune.banking.exception.NotValidJSONValueException;
 import ru.marasanov.neptune.banking.model.ConverterDTO;
 import ru.marasanov.neptune.banking.model.dto.AccountDTO;
 import ru.marasanov.neptune.banking.service.AccountService;
@@ -28,7 +30,8 @@ public class AccountController {
             case "phone_number":
                 return ConverterDTO.toAccountDTO(accountService.getByPhoneNumber(value));
             default:
-                return null; //TODO: process no args case
+                throw new NotValidJSONValueException(HttpStatus.BAD_REQUEST,
+                        "request param 'find_by' is not valid");
         }
     }
 
