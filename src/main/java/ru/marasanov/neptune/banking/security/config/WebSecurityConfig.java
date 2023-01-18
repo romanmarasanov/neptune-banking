@@ -24,18 +24,24 @@ public class WebSecurityConfig {
         this.accountDetailsService = accountDetailsService;
     }
 
+    /**
+     * Виды аутентификации:
+     * Базовая (httpBasic) – аутентификация GET-запросом с передачей credentials в хедере запроса
+     * Через форму (formLogin) – аутентификация POST-запросом с передачей credentials в теле запроса
+     * Auth 2.0 – advanced тема
+     */
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        return http
-                .authenticationProvider(daoAuthenticationProvider())
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeRequests(auth -> {
-                    auth.antMatchers("/api/v1/registration").permitAll();
-                    auth.antMatchers("/api/v1/account**").hasRole("CLIENT");
-                    auth.antMatchers("/api/v1/admin**").hasRole("ADMIN");
-                })
-                .httpBasic(Customizer.withDefaults())
-                .build();
+        http
+            .authenticationProvider(daoAuthenticationProvider())
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeRequests(auth -> {
+                auth.antMatchers("/api/v1/registration").permitAll();
+                auth.antMatchers("/api/v1/account**").hasRole("CLIENT");
+                auth.antMatchers("/api/v1/admin**").hasRole("ADMIN");
+            })
+            .formLogin();
+        return http.build();
     }
 
     @Bean

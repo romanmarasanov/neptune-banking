@@ -66,7 +66,7 @@ public class ConverterDTO {
                 .setPassword(registrationDTO.getPassword())
                 .setEmail(registrationDTO.getEmail())
                 .setPhoneNumber(registrationDTO.getPhoneNumber())
-                .setRole(Role.CLIENT)
+                .setRole(Role.ROLE_CLIENT)
                 .setCreatedAt(new Timestamp(System.currentTimeMillis()))
                 .build();
     }
